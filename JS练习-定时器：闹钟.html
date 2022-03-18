@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>JS练习-定时器：闹钟</title>
+	<style>
+	.divBorder{ border: 1px solid red; padding: 15px;  width: 850px; }
+	</style>
+</head>
+<body>
+	<div align="center">
+		<span>闹钟的时间数字：</span>
+		<input type="number" id="alarmClockTime" />
+		<select id="selectResult">
+			<option value="秒">秒</option>
+			<option value="分">分</option>
+			<!-- <option value="时">时</option> -->
+			<!-- <option value="天">天（24时）</option> -->
+			<!-- <option value="周">周（7*24时）</option> -->
+		</select>
+		<input type="button" value="定制闹钟" id="openAlarmClock">
+		<input type="button" value="关闭闹钟" id="closeAlarmClock">
+		<br/><br/>
+		<span>您定制的闹钟频率是：</span>
+		<span id="show"></span>
+		<br/><br/><br/><br/>
+	</div>
+	<div class="divBorder">
+		<span>* 该闹钟缺点：</span><br/>
+		<span>如果在定义了一个闹钟后刷新了页面，那么定义的闹钟会失效；</span><br/>
+		<span>如果在已经定义了一个闹钟的前提下再定义一个闹钟，那么两个闹钟都会生效，但能关闭的闹钟只能是最近设置的。</span>
+		<br/><br/><br/><br/>
+		<span>^ 可优化的点：</span><br/>
+		<span>确定了闹钟的频率，还可以自由确定从哪个时间点开始闹钟，当前时间或自定义分钟。</span>
+	</div>
+	<script>
+		var alarmClockTimeValue;//闹钟的时间数字
+		var selectResultVlaue;//闹钟的时间单位
+		var varFrequency;//闹钟频率
+		var id;//定时器返回值
+		//点击按钮‘定制闹钟’按钮
+		var openAlarmClock = document.getElementById("openAlarmClock");
+		openAlarmClock.onclick = function(){
+			//获取闹钟的时间数字
+			alarmClockTimeValue = document.getElementById("alarmClockTime").value;
+			//获取闹钟的时间单位
+			selectResultVlaue = document.getElementById("selectResult").value;
+			//确定闹钟频率
+			if(alarmClockTimeValue > 0){
+				switch (selectResultVlaue){
+					case "秒": 
+						varFrequency = alarmClockTimeValue*1000; break;
+					case "分": 
+						varFrequency = alarmClockTimeValue*1000*60; break;
+					case "时": 
+						varFrequency = alarmClockTimeValue*1000*60*60; break;
+					case "天": 
+						varFrequency = alarmClockTimeValue*1000*60*60*24; break;
+					case "周": 
+						varFrequency = alarmClockTimeValue*1000*60*60*24*7; break;
+					case undefined:
+						alert("时间单位没有确定，请重新选择");
+						varFrequency = 0000; break;
+				}
+				//alert(varFrequency);
+				//设置循环定时器：通过varFrequency确定定时器频率，然后在频率内调用闹钟提示信息，并确定其返回值
+				id = setInterval("funClock(alarmClockTimeValue, selectResultVlaue)", varFrequency);
+				//将闹钟信息显示在<span>标签里
+				document.getElementById("show").innerHTML = "每" + alarmClockTimeValue + selectResultVlaue;
+			} else {
+				alert("请输入具体的闹钟时间数字");
+			}
+		}
+		//闹钟提示信息
+		function funClock(alarmClockTimeValue, selectResultVlaue){
+			alert("您定制的闹钟时间到了：每" + alarmClockTimeValue + selectResultVlaue);
+		}
+		//关闭闹钟
+		var varCloseAlarmClock = document.getElementById("closeAlarmClock");
+		varCloseAlarmClock.onclick = function(){ 
+			if(id > 0){
+				clearInterval(id);
+			} else {
+				alert("当前没有定义闹钟");
+			}
+		}
+	</script>
+</body>
+</html>
