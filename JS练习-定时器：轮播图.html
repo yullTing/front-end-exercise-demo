@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>JS练习-定时器：轮播图</title>
+	<style>
+	.divBorder{ border:1px solid red; margin: 50px 100px; }
+	</style>
+</head>
+<body>
+	<div class="divBorder">
+		<img src="ShufflingFigure/banner_1.jpg" width="100%" id="img">
+	</div> 
+	<script>
+		//获取图片img标签
+		var varImg = document.getElementById("img");
+		//初始图片(banner_1.jpg)的名称序号：1
+		var picNumber = 1;
+		//更换图片
+		function freqs(){
+			//图片名称序号：2 3 ...
+			picNumber++;
+			//ShufflingFigure文件夹中只有三张图片，故需要判断图片序号满足循环条件
+			if(picNumber > 3){
+				//当图片序号大于3时，无法在ShufflingFigure文件夹中找到对应图片，此时的图片用第一张代替
+				picNumber = 1;
+			}
+			//确定轮播图中更换的图片序号
+			varImg.src = "ShufflingFigure/banner_" + picNumber + ".jpg";
+		}
+		//开启循环定时器，每3秒(3000)更换一张图片
+		setInterval(freqs, 3000); 
+	</script>
+</body>
+</html>
