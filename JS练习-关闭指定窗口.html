@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>JS练习-关闭指定窗口</title>
+	<style>
+	.divBorder{ border:1px solid red; padding:15px; width: 500px; }
+	</style>
+</head>
+<body>
+	<div align="center">
+		<h3>关闭指定窗口</h3>
+		<input id="specifiedUrl" type="text" placeholder="请输入您要打开的网址url" />
+		<input id="openBtn" type="button" value="打开" />
+		<input id="closeBtn" type="button" value="关闭" />
+		<br/>
+		<br/>
+	</div>
+	<div class="divBorder">
+		<span>* 缺陷：</span><br/>
+		<span>如果打开了多个相同或不相同的窗口，只能关闭最近打开的窗口</span>
+	</div>
+	<script>
+		//获取指定的网址url
+		var specifiedUrl = document.getElementById("specifiedUrl");
+		//获取打开标签按钮的id
+		var openBtn = document.getElementById("openBtn");
+		//方法open()的返回值
+		var specifiedWindow;
+		//打开按钮的点击事件
+		openBtn.onclick = function(){
+			if(specifiedUrl.value==""){
+				//警告信息：没有输入网址
+				alert("请输入您要打开的网址url");
+			} else {
+				//打开指定窗口
+				specifiedWindow = open(specifiedUrl.value);
+			}
+		}
+		//获取关闭标签按钮的id
+		var closeBtn = document.getElementById("closeBtn");
+		//关闭按钮的点击事件
+		closeBtn.onclick = function(){ 
+		    // 关闭指定窗口
+			specifiedWindow.close();
+		}
+	</script>
+</body>
+</html>
