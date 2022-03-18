@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JS 练习-表格全选全不选反选</title>
+    <style>
+        table{ border: 1px solid; width: 500px; margin-left: 30%; }
+        td,th{ text-align: center; border: 1px solid; }
+        div{ margin-top: 10px; margin-left: 30%; }
+        .out{ background-color: white; }
+        .over{ background-color: #e1e1e2; }
+    </style>
+	<script>
+	window.onload = function(){
+		//1. 全选
+		document.getElementById("selectAll").onclick = function(){
+			//1.1 获取所有name属性为cb的标签，得到一个数组
+			var var_cbs = document.getElementsByName("cb");
+			//1.2 遍历得到的数组
+			for(var i=0; i<var_cbs.length; i++){
+				//1.3 添加checked属性：checked = true
+				var_cbs[i].checked = true;
+			}
+		}
+		//2. 全不选
+		document.getElementById("unSelectAll").onclick = function(){
+			//同“1. 全选”基本一样，区别只在最后需删除checked属性：checked = false
+			var var_cbs = document.getElementsByName("cb"); 
+			for(var i=0; i<var_cbs.length; i++){ 
+				var_cbs[i].checked = false;
+			}
+		}
+		//3. 反选
+		document.getElementById("selectRev").onclick = function(){
+			//同“1. 全选”基本一样，区别只在最后需将checked属性取反
+			var var_cbs = document.getElementsByName("cb"); 
+			for(var i=0; i<var_cbs.length; i++){ 
+				var_cbs[i].checked = !var_cbs[i].checked;
+			}
+		}
+		//4. 选中/不选中表头的多选框时，要使表内容同列的多选框状态一致
+		document.getElementById("firstCb").onclick = function(){
+			var var_cbs = document.getElementsByName("cb"); 
+			for(var i=0; i<var_cbs.length; i++){ 
+				var_cbs[i].checked = this.checked;
+			}
+		}
+		//5. 设置鼠标 悬浮/移出 行标签时不同的class属性
+		var var_trs = document.getElementsByTagName("tr");
+		for(var i=0; i<var_trs.length; i++){
+			var_trs[i].onmouseover = function(){ this.className = "over"; }
+			var_trs[i].onmouseout = function(){ this.className = "out"; }
+		}
+	}
+	</script>
+
+</head>
+<body>
+<table>
+    <caption>学生信息表</caption>
+    <tr>
+		<th><input type="checkbox" name="cb" id="firstCb"></th>
+        <th>编号</th>
+		<th>姓名</th>
+		<th>性别</th>
+		<th>操作</th>
+	</tr>
+    <tr>
+		<td><input type="checkbox"  name="cb" ></td>
+        <td>2031</td>
+		<td>李诗情</td>
+		<td>女</td>
+		<td><a href="javascript:void(0);">删除</a></td>
+    </tr>
+    <tr>
+        <td><input type="checkbox"  name="cb" ></td>
+        <td>2032</td>
+        <td>白敬亭</td>
+        <td>男</td>
+        <td><a href="javascript:void(0);">删除</a></td>
+    </tr>
+    <tr>
+        <td><input type="checkbox"  name="cb" ></td>
+        <td>2033</td>
+        <td>锅姨</td>
+        <td>女</td>
+        <td><a href="javascript:void(0);">删除</a></td>
+    </tr>
+
+</table>
+<div>
+    <input type="button" id="selectAll" value="全选">
+    <input type="button" id="unSelectAll" value="全不选">
+    <input type="button" id="selectRev" value="反选">
+</div>
+</body>
+</html>
